@@ -15,6 +15,7 @@ import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
 import Error from "components/Appointment/Error";
+import Form from "components/Appointment/Form";
 
 
 
@@ -169,4 +170,20 @@ storiesOf("Button", module)
           message= {"Could not delete appointment."}
           onClose= {action("onClose")}
         />
+      )
+      .add("Create", () => 
+        <Form 
+          interviewers= {interviewers}
+          onSave= {action("onSave")}
+          onCancel= {action("onCancel")}
+          />
+      )
+      .add("Edit", () => 
+        <Form 
+          student= {"Lydia Miller-Jones"}
+          interviewer= {interviewer}
+          interviewers= {interviewers}
+          onSave= {action("onSave")}
+          onCancel= {action("onCancel")}
+          />
       )
