@@ -180,10 +180,11 @@ storiesOf("Button", module)
       )
       .add("Edit", () => 
         <Form 
-          student= {"Lydia Miller-Jones"}
-          interviewer= {interviewer}
+          student= {"Russell"}
+          interviewer= {2}
           interviewers= {interviewers}
           onSave= {action("onSave")}
           onCancel= {action("onCancel")}
+          onSubmit= {action("onSubmit")}
           />
       )
