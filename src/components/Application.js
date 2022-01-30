@@ -63,12 +63,19 @@ const appointments = [
 // ];
 
 export default function Application(props) {
+  // const [day, setDay] = useState("Monday")
+  // const [days, setDays] = useState([])
+
   const [state, setState] = useState({
     day: "Monday",
     days: [],
     // you may put the line below, but will have to remove/comment hardcoded appointments variable
-    // appointments: {}
+    appointments: {}
   });
+
+  const setDay = day => setState({ ...state, day });
+  const setDays = (days) => setState(prev => ({ ...prev, days }));;
+
   useEffect(() => {
     axios
       .get(`http://localhost:8001/api/days`)
@@ -76,7 +83,7 @@ export default function Application(props) {
         console.log(response);
         setDays(response.data)
       })
-  },[state])
+  },[])
   
   
   const schedule = appointments.map(appointment => (
