@@ -22,3 +22,17 @@ export function getAppointmentsForDay(state, day) {
   
   return output
 }
+
+export function getInterview (state, interview) {
+
+  if (!interview) {
+    return null
+  }
+  const interviewerID = interview['interviewer']
+  const output = {}
+  output.interviewer = {... state['interviewers'][interviewerID]}
+  console.log(`output is ${JSON.stringify(output)}`)
+  output.student = interview.student 
+  console.log(`output is ${JSON.stringify(output)}`)
+  return output
+}

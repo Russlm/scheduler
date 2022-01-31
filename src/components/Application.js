@@ -85,7 +85,7 @@ export default function Application(props) {
     ]).then((response) => {
       console.log(response)
       // setDays(response[0].data)
-      setState(prev => ({...prev, days: response[0].data, appointments: response[1].data, state: response[2].data }));
+      setState(prev => ({...prev, days: response[0].data, appointments: response[1].data, interviewers: response[2].data }));
     })
     // axios
     //   .get(`/api/days`)
@@ -98,8 +98,11 @@ export default function Application(props) {
 
 
   const schedule = dailyAppointments.map(appointment => (
+
+    
     <Appointment 
       key={appointment.id}
+      id={appointment.id}
       time= {appointment.time}
       interview={appointment.interview}
     />
