@@ -19,18 +19,17 @@ export default function Application(props) {
     interviewers: {}
   });
 
-  const setDay = day => setState({ ...state, day });
-  // const setDays = (days) => setState(prev => ({ ...prev, days }));;
+  const setDay = (day) => setState((prev) => ({ ...prev, day }));
+
+
 
   useEffect(() => {
     Promise.all([
-      axios.get(`/api/days`),
-      axios.get(`/api/appointments`),
-      axios.get(`/api/interviewers`)
-    ]).then((response) => {
-      console.log(response)
-      // setDays(response[0].data)
-      setState(prev => ({...prev, days: response[0].data, appointments: response[1].data, interviewers: response[2].data }));
+      axios.get('/api/days'),
+      axios.get('/api/appointments'),
+      axios.get('/api/interviewers')
+    ]).then((res) => {
+      setState(prev => ({...prev, days: res[0].data, appointments: res[1].data, interviewers: res[2].data }));
     })
   },[])
 
@@ -48,10 +47,12 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    setState({
-      ...state,
-      appointments
-    });
+
+    axios.put(`/api/appointments/${id}`, appointments[id]) 
+      .then(setState({
+        ...state,
+        appointments
+      })) 
   }
 
 
@@ -71,12 +72,6 @@ export default function Application(props) {
   });
 
 
-  function save(name, interviewer) {
-    const interview = {
-      student: name,
-      interviewer
-    };
-  }
 
   return (
     
