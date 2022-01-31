@@ -8,18 +8,12 @@ export function getAppointmentsForDay(state, day) {
   if (!state.days.map(days => days.name).includes(day)) {
     return [];
   }
-  const calendar = state["days"].filter(x => x.name === day)
-  const appt = calendar[0].appointments
-  console.log(`appt is ${JSON.stringify(appt)}`)
+  // const selectedDay = state.days.filter(x => x.name === day)[0]
+  const selectedDay = state.days.find(eachDay => eachDay.name === day)
+  // console.log(`appt is ${JSON.stringify(appt)}`)
   
-  const output= appt.map(entry => state["appointments"][entry])
-  console.log(`appt is ${JSON.stringify(output)}`)
-  // const output = []
-  // for (let entry in appt ) {
-  //   output.push(state["appointments"][entry])
-  // }
-  // console.log(`output is ${JSON.stringify(output)}`)
-  
+  const output= selectedDay.appointments.map(appointmentID => state.appointments[appointmentID])
+
   return output
 }
 
@@ -32,9 +26,9 @@ export function getInterview (state, interview) {
   const interviewerID = interview['interviewer']
   const output = {}
   output.interviewer = {... state['interviewers'][interviewerID]}
-  console.log(`output is ${JSON.stringify(output)}`)
+  // console.log(`output is ${JSON.stringify(output)}`)
   output.student = interview.student 
-  console.log(`output is ${JSON.stringify(output)}`)
+  // console.log(`output is ${JSON.stringify(output)}`)
   return output
 }
 
@@ -48,16 +42,11 @@ export function getInterviewersForDay(state, day) {
   if (!state.days.map(days => days.name).includes(day)) {
     return [];
   }
-  const dailyInterviewerID = state["days"].filter(x => x.name === day)[0].interviewers
-  console.log(`appt is ${JSON.stringify(appt)}`)
+  const todaysInterviewerIDs = state.days.filter(x => x.name === day)[0].interviewers
+
   
   const output= dailyInterviewerID.map(entry => state["interviewers"][entry])
-  console.log(`appt is ${JSON.stringify(output)}`)
-  // const output = []
-  // for (let entry in appt ) {
-  //   output.push(state["appointments"][entry])
-  // }
-  // console.log(`output is ${JSON.stringify(output)}`)
+
   
   return output
 }

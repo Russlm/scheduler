@@ -8,67 +8,8 @@ import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "./he
 import useVisualMode from "./hooks/useVisualMode";
 
 
-// const appointments = [
-//   {
-//     id: 1,
-//     time: "12pm",
-//   },
-//   {
-//     id: 2,
-//     time: "1pm",
-//     interview: {
-//       student: "Lydia Miller-Jones",
-//       interviewer:{
-//         id: 3,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png",
-//       }
-//     }
-//   },
-//   {
-//     id: 3,
-//     time: "2pm",
-//   },
-//   {
-//     id: 4,
-//     time: "3pm",
-//     interview: {
-//       student: "Archie Andrews",
-//       interviewer:{
-//         id: 4,
-//         name: "Cohana Roy",
-//         avatar: "https://i.imgur.com/FK8V841.jpg",
-//       }
-//     }
-//   },
-//   {
-//     id: 5,
-//     time: "4pm",
-//   }
-// ];
-
-// const days = [
-//   {
-//     id: 1,
-//     name: "Monday",
-//     spots: 2,
-//   },
-//   {
-//     id: 2,
-//     name: "Tuesday",
-//     spots: 5,
-//   },
-//   {
-//     id: 3,
-//     name: "Wednesday",
-//     spots: 0,
-//   },
-// ];
 
 export default function Application(props) {
-  // const [day, setDay] = useState("Monday")
-  // const [days, setDays] = useState([])
-
 
   const [state, setState] = useState({
     day: "Monday",
@@ -90,15 +31,27 @@ export default function Application(props) {
       // setDays(response[0].data)
       setState(prev => ({...prev, days: response[0].data, appointments: response[1].data, interviewers: response[2].data }));
     })
-    // axios
-    //   .get(`/api/days`)
-    //   .then((response) => {
-    //     setDays(response.data)
-    //   })
   },[])
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
+
+  const bookInterview = (id, interview) => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState({
+      ...state,
+      appointments
+    });
+  }
 
 
   const schedule = dailyAppointments.map(appointment => {
@@ -111,9 +64,19 @@ export default function Application(props) {
         time= {appointment.time}
         interviewers={dailyInterviewers}
         interview={interview}
+        bookInterview={bookInterview}
       />
     );
   });
+
+
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+  }
+
   return (
     
     <main className="layout">
