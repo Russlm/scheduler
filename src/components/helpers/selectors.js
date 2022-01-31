@@ -1,3 +1,18 @@
+
+export function getInterview (state, interview) {
+
+  if (!interview) {
+    return null;
+  }
+  const interviewerID = interview.interviewer
+  const interviewObj = {
+    student: interview.student,
+    interviewer: {...state.interviewers[interviewerID]}
+  }
+  return interviewObj;
+}
+
+
 export function getAppointmentsForDay(state, day) {
   if (!day) {
     return [];
@@ -5,31 +20,19 @@ export function getAppointmentsForDay(state, day) {
   if (!state.days[0]) {
     return []
   }
-  if (!state.days.map(days => days.name).includes(day)) {
+
+  const dayExists = state.days.map(days => days.name).includes(day);
+
+  if (!dayExists) {
     return [];
   }
   // const selectedDay = state.days.filter(x => x.name === day)[0]
-  const selectedDay = state.days.find(eachDay => eachDay.name === day)
+  const selectedDay = state.days.find(eachDay => eachDay.name === day);
   // console.log(`appt is ${JSON.stringify(appt)}`)
   
-  const output= selectedDay.appointments.map(appointmentID => state.appointments[appointmentID])
+  const appointmentsForDay= selectedDay.appointments.map(appointmentID => state.appointments[appointmentID]);
 
-  return output
-}
-
-
-export function getInterview (state, interview) {
-
-  if (!interview) {
-    return null
-  }
-  const interviewerID = interview['interviewer']
-  const output = {}
-  output.interviewer = {... state['interviewers'][interviewerID]}
-  // console.log(`output is ${JSON.stringify(output)}`)
-  output.student = interview.student 
-  // console.log(`output is ${JSON.stringify(output)}`)
-  return output
+  return appointmentsForDay;
 }
 
 export function getInterviewersForDay(state, day) {
@@ -37,16 +40,18 @@ export function getInterviewersForDay(state, day) {
     return [];
   }
   if (!state.days[0]) {
-    return []
-  }
-  if (!state.days.map(days => days.name).includes(day)) {
     return [];
   }
-  const todaysInterviewerIDs = state.days.filter(x => x.name === day)[0].interviewers
+  const dayExists =state.days.map(days => days.name).includes(day);
+  if (!dayExists) {
+    return [];
+  }
+
+  const selectedDay = state.days.find(eachDay => eachDay.name === day);
+  // const todaysInterviewerIDs = state.days.filter(x => x.name === day)[0].interviewers
+
+  const interviewersForDay= selectedDay.interviewers.map(interviewerID => state.interviewers[interviewerID]);
 
   
-  const output= dailyInterviewerID.map(entry => state["interviewers"][entry])
-
-  
-  return output
+  return interviewersForDay;
 }
