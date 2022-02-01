@@ -10,6 +10,7 @@ import Form from "./Form";
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE"
+const SAVING = "SAVING"
 
 
 
@@ -35,10 +36,10 @@ export default function Appointment(props) {
       student,
       interviewer
     };
+    transition(SAVING)
+
     props.bookInterview(props.id, interview)
-      transition(SHOW);
-      console.log(interview)
-      // .then(()=> transition(SHOW))
+      .then(()=> transition(SHOW))
       // .catch((err) => console.log(err))
 
   }
