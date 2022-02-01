@@ -5,7 +5,6 @@ export default function useApplicationData(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    // you may put the line below, but will have to remove/comment hardcoded appointments variable
     appointments: {},
     interviewers: {}
   });
@@ -24,6 +23,24 @@ export default function useApplicationData(props) {
     })
   },[])
 
+  // const updateSpots = (id, remove) => {
+  //   const selectedDay = state.days.find(eachDay => eachDay.name === day);
+  //   if (remove) {
+  //     const spots = selectedDay.spots
+  //     selectedDay.spots = spots - 1
+  //     console.log(spots)
+  //   }
+  //   const spots = selectedDay.spots
+  //     selectedDay.spots = spots + 1
+  //     console.log(spots)
+  // }
+  const updateSpots = () => { 
+    axios.get('api/days')
+      .then((res) => {
+        setState(prev => ({...prev, days: res.data}));
+      })
+  }
+
   const bookInterview = (id, interview) => {
     const appointment = {
       ...state.appointments[id],
@@ -35,14 +52,19 @@ export default function useApplicationData(props) {
       [id]: appointment
     };
 
-
+    
     return axios.put(`/api/appointments/${id}`, appointments[id]) 
-      .then(setState({
-        ...state,
-        appointments
-      })) 
+      .then(() => {
+        setState({
+          ...state,
+          appointments, 
+        })
+        updateSpots()
+    }) 
+      
   }
-  const deleteInterview = (id, interview) => {
+
+  const deleteInterview = (id) => {
     const appointment = {
       ...state.appointments[id],
       interview: null
@@ -55,12 +77,9 @@ export default function useApplicationData(props) {
 
 
     return axios.delete(`/api/appointments/${id}`) 
-      .then(res => {
-        setState({
-        ...state,
-        appointments
-      });
-      return res;
+      .then(() => {
+        setState({...state, appointments});
+        updateSpots()
       }) 
   }
 
