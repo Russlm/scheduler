@@ -160,7 +160,7 @@ storiesOf("Button", module)
       .add("Empty", () => <Empty onAdd={action("onAdd")}/>)
       .add("Show", () => 
         <Show 
-          student= {"Lydia Miller-Jones"}
+          name= {"Lydia Miller-Jones"}
           interviewer = {interviewer}
           onEdit= {action("onEdit")}
           onDelete= {action("onDelete")}
@@ -194,7 +194,7 @@ storiesOf("Button", module)
       )
       .add("Edit", () => 
         <Form 
-          student= {"Russell"}
+          name= {"Russell"}
           interviewer= {2}
           interviewers= {interviewers}
           onSave= {action("onSave")}

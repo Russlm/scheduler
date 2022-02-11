@@ -54,7 +54,7 @@ export default function Appointment(props) {
   }
   function destroy() {
 
-    transition(DELETING)
+    transition(DELETING, true)
 
     props.deleteInterview(props.id)
       .then(()=> transition(EMPTY))
