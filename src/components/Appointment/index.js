@@ -30,15 +30,6 @@ export default function Appointment(props) {
 
   useVisualMode(mode);
 
-  // console.log(props)
-  // const formatTime = (props) => {
-  //   if (props.time) {
-  //     return `Appointment at ${props.time}`
-  //   } else {
-  //     return "No Appointments"
-  //   }
-  // }
-
   function save(student, interviewer) {
     const interview = {
       student,
